@@ -1,38 +1,32 @@
 *** Settings ***
-Library    OperatingSystem   
-Library    SeleniumLibrary 
-Resource    ../TestData/gmailData.txt  
-Test Teardown    Close All Browsers
-  
-*** Variables ***
-${URL}           https://accounts.google.com/ServiceLogin/identifier?service=mail&passive=true&rm=false&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ss=1&scc=1&ltmpl=default&ltmplcache=2&emr=1&osid=1&flowName=GlifWebSignIn&flowEntry=AddSession
-${Browser}       chrome   
+Library    SeleniumLibrary    
+
 
 *** Test Cases ***
-TC01    Test Gmail Login     @{user1}
-TC02    Test Gmail Login     @{user2}
 
-*** Keywords ***
-Test Gmail Login    
-    [Arguments]    @{testData}
+SignupTestcase
+    [Documentation]    this is signup test
+    ...    
+    [Tags]    acceptance
     Create Webdriver    Chrome    executable_path=C:/Users/Rukhmini/Downloads/chromedriver_win32/chromedriver.exe
-    Go To    ${URL}
-    input username    @{testData}[0]
-    Sleep    2
-    enter password     @{testData}[1]
-    Verify Login is Successful
-
-
-Verify Login is Successful
-    Wait Until Page Contains    mayur
+    Go To    https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp
+    Set Browser Implicit Wait    5
+    Input Text       id=firstName        radha
+    Input Text       id=lastName         patil
+    Input Text       id=username         radhapatil9346
+    Input Password   name=Passwd           r@dha10129
+    Input Password   name=ConfirmPasswd   r@dha10129      
+    Click Element    xpath=//*[@id="accountDetailsNext"]/span/span    
+    Sleep    2    
+    Input Text    id=phoneNumberId    9075024641
+    Click Element    xpath=//*[@id="gradsIdvPhoneNext"]/span/span    
+    Sleep    2    
+    Input Text    name=code    262370
+    Click Element    xpath=//*[@id="gradsIdvVerifyNext"]/span/span  
+    Input Text    xpath=//*[@id="day"]    4
+    Click Element    xpath=//*[@id="month"]    
+    Click Element    link=June  
+    Input Text    xpath=//*[@id="year"]    1993
+    Click Element    xpath=//*[@id="gender"]    
     
-input username
-    [Arguments]    ${username}
-    Input Text    id=identifierId    ${username}
-    Click Element    css=.RveJvd.snByac
-    
-enter password
-    [Arguments]    ${password}
-    Input Password    name=password    ${password} 
-    Click Element    css=.RveJvd.snByac
          
